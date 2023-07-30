@@ -4,6 +4,7 @@
   // 1. 将列表中的第一个元素，克隆到列表的最后一个
   function cloneFirstItem() {
     var firstItem = list.children[0];
+    // 深度克隆：将元素及其子元素，全部克隆
     var newItem = firstItem.cloneNode(true);
     list.appendChild(newItem);
   }
@@ -23,20 +24,38 @@
     // 慢慢变为：在一段时间内，每隔一小段时间，变化一点
     var totalDuration = 300; // 变化的总时间
     var duration = 10; // 变化的间隔时间
-    var times = totalDuration / duration; //变化的次数
-    var dis = (to - from) / times; // 每次变化的量
-    var timerId = setInterval(function () {
+
+    /**
+     * 对el的属性prop从from变化到to，中途一共变化时间totalDuration，每次变化duration，完成后的回掉callback
+     * @param {*} el 
+     * @param {*} prop 
+     * @param {*} from 
+     * @param {*} to 
+     * @param {*} totalDuration 
+     * @param {*} duration 
+     * @param {*} callback 
+     */
+    function animation (el, prop, from, to, totalDuration, duration, callback) { 
+      var times = totalDuration / duration; //变化的次数
+      var dis = (to - from) / times; // 每次变化的量
+      var timerId = setInterval(function () {
       from += dis;
       if (from >= to) {
         // 到达目标值了
         clearInterval(timerId); // 停止计时器
+        callback && callback();
         // 滚动完成后，如果是最后一项
         if (curIndex === list.children.length - 1) {
           from = 0;
           curIndex = 0;
         }
       }
-      list.scrollTop = from;
+      el[prop] = from;
     }, duration);
+
+    }
+    
+    animation(list, 'scrollTop', from, to, totalDuration, duration,)
+   
   }
 })();
