@@ -47,7 +47,7 @@
   /* 表头点击事件 */
   function onThsClick (index) { 
     var rows = tbody.querySelectorAll('tr')     // 所有的行的集合
-    // 1、先拷贝这些行
+    // 1、先转化为数组，才会有排序方法！！！
     var sortedRows = Array.prototype.slice.call(rows)
     // 2、进行排序得到新的数组
     const strCompNames = ['姓名', '职位']
