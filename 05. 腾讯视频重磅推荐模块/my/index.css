@@ -39,7 +39,7 @@
   /* background-color: rgb(25,117,180); */
 }
 
-.imgs a:active {
+.imgs .active {
   display: block;
 }
 
